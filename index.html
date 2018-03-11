@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>jQuery</title>
+  </head>
+  <body class="bg-dark text-light">
+    <div class="container-fluid">
+        <div class="row" id="main">
+            <div class="col-sm-12">
+                <h1 id="title"></h1> 
+            </div>
+        </div> <!--class row-->
+    </div> <!--class container*/-->
+
+    <template id="template">
+        <section class="col-md-6">
+            <div class="row">
+                <h1 id='title' class="col-sm-12" ></h1>
+            </div>
+            
+            <div>
+                    <img src="" alt="" class="img-fluid img-thumbnail">
+              <p class="text-justify">
+
+              </p>
+            </div>
+
+            <footer>
+                <a href="" class="btn btn-light">More</a>
+            </footer>
+        </section>
+    </template>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            var imagePath = '../jQuery template/images/';
+            var imageSuffix = '.jpg'
+            $.get('audiCars.json', function(data,status){
+                $('#title').html(data.title);   
+                $.each(data.items,function(index,item){
+                    var sectionHTML = $('#template').html();
+                    var section = $(sectionHTML).clone();
+                    section.find('img').attr({
+                        'src' : imagePath + item.src + imageSuffix,
+                        'alt' : item.alt
+                    });
+                    section.find('h1').html(item.title);
+                    section.find('p').html(item.info);
+                    section.find('footer a').attr('href',item.url);
+                    $('#main').append(section);
+                });
+            });
+        });
+    
+    </script>
+</body>
+</html>
